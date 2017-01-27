@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package elimc;
+package constructores;
 
 /**
  *
  * @author T-102
  */
-public class AplicacionImc {
+public class Aplicacion {
     public static void main(String[] args) {
-        Usuario yo=new Usuario();
-        yo.setPeso(80);
-        yo.setAltura(1.83f);
+        Animal m=new Animal();
+        m.setEdad(1);
+        System.out.println("La edad es " + m.getEdad());
         
-        Imc imc=new Imc();
-        imc.setUser(yo);
-        System.out.println(imc.calcular());
     }
 }

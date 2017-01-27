@@ -17,9 +17,33 @@ import javax.swing.JOptionPane;
  */
 public class Trabajador {
     
-    long numeroSocial;
-    String nombre;
-    String paterno;
+    private long numeroSocial;
+    private String nombre;
+    private String paterno;
+
+    public long getNumeroSocial() {
+        return numeroSocial;
+    }
+
+    public void setNumeroSocial(long numeroSocial) {
+        this.numeroSocial = numeroSocial;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getPaterno() {
+        return paterno;
+    }
+
+    public void setPaterno(String paterno) {
+        this.paterno = paterno;
+    }
 
   
 }
