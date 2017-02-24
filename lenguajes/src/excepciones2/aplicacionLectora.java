@@ -89,6 +89,7 @@ public class aplicacionLectora extends javax.swing.JFrame {
             
             File file = selector.getSelectedFile();
             ValidacionArchivo.validarExtencion(file);
+            ValidacionArchivo.validarMayusculas(file);
             
             Modelolector modelo=new Modelolector();
             textoResultado.setText( modelo.leerArchivo(file));
