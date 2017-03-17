@@ -5,6 +5,8 @@
  */
 package serializar;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author T-102
@@ -42,10 +44,10 @@ public class ApUsuario extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        textoNombreBuscar = new javax.swing.JTextField();
+        buscarPorNombre = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuarios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,9 +176,14 @@ public class ApUsuario extends javax.swing.JFrame {
 
         jLabel5.setText("Introduce el nombre a buscar");
 
-        jButton2.setText("Buscar");
+        buscarPorNombre.setText("Buscar");
+        buscarPorNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarPorNombreActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -187,7 +194,7 @@ public class ApUsuario extends javax.swing.JFrame {
                 "Nombre", "Email", "Edad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuarios);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -199,8 +206,8 @@ public class ApUsuario extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
+                        .addComponent(textoNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buscarPorNombre))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
@@ -213,9 +220,9 @@ public class ApUsuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(buscarPorNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -275,9 +282,38 @@ public class ApUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombre = textoNombre.getText();
         String email = textoEmail.getText();
-        int edad=textoEdad.getText();
+        int edad=Integer.parseInt(textoEdad.getText());
+        
+        Usuario u=new Usuario(nombre,email,edad);
+        
+        PersistenciaUsuario p=new PersistenciaUsuario();
+        try{
+            p.guardar(u);
+          JOptionPane.showConfirmDialog(this,"usuario guardado");
+        } catch (Exception ex) {
+          JOptionPane.showConfirmDialog(this, ex.getMessage());
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void buscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorNombreActionPerformed
+        
+        try{
+            
+            PersistenciaUsuario p=new PersistenciaUsuario();
+            Usuario encontrado=p.buscarPorNombre(textoNombreBuscar.getText());
+           tablaUsuarios.setValueAt(encontrado.getNombre(), 0, 0);
+           tablaUsuarios.setValueAt(encontrado.getEmail(), 0, 1);
+           tablaUsuarios.setValueAt(encontrado.getEdad(), 0, 2);
+        }catch(NullPointerException e){
+            Object[] opciones={"Ni Modo!!"};
+ int n= JOptionPane.showOptionDialog(this,"Usuario no encontrado", "Nada"
+     ,JOptionPane.PLAIN_MESSAGE,JOptionPane.QUESTION_MESSAGE,null,opciones, opciones[0]); 
+        }catch(Exception e){
+            
+              JOptionPane.showConfirmDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_buscarPorNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,8 +351,8 @@ public class ApUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscarPorNombre;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -330,10 +366,10 @@ public class ApUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField textoEdad;
     private javax.swing.JTextField textoEmail;
     private javax.swing.JTextField textoNombre;
+    private javax.swing.JTextField textoNombreBuscar;
     // End of variables declaration//GEN-END:variables
 }

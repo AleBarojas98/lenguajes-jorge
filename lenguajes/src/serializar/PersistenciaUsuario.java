@@ -18,8 +18,16 @@ public class PersistenciaUsuario {
         FileOutputStream fos=new FileOutputStream(file);
         ObjectOutputStream oos=new ObjectOutputStream(fos);
          oos.writeObject(u);
-        
-    
+           
+    }
+    public Usuario buscarPorNombre(String nombre) throws Exception{
+        File file=new File("Base-usuarios");
+        FileInputStream fis=new FileInputStream(file);
+        ObjectInputStream ois=new ObjectInputStream(fis);
+        Usuario encontrado=null;
+        Usuario u=(Usuario) ois.readObject();
+        if(u.getNombre().equals(nombre))encontrado=u;
+        return encontrado;
     }
 }
 
